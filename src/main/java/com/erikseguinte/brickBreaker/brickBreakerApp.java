@@ -12,6 +12,11 @@ public class brickBreakerApp extends GameApplication {
 
     @Override
     protected void initSettings(GameSettings settings) {
+        settings.setHeight(800);
+        settings.setWidth(480);
+        settings.setIntroEnabled(false);
+        settings.setVersion("0.1");
 
     }
+    
 }

@@ -5,9 +5,12 @@ import com.almasb.fxgl.entity.Entities;
 import com.almasb.fxgl.entity.Entity;
 
 import com.almasb.fxgl.entity.RenderLayer;
+import com.almasb.fxgl.entity.component.CollidableComponent;
 import com.almasb.fxgl.entity.component.IrremovableComponent;
 import com.almasb.fxgl.input.Input;
 import com.almasb.fxgl.input.UserAction;
+import com.almasb.fxgl.physics.PhysicsComponent;
+import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
 import com.almasb.fxgl.settings.GameSettings;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
@@ -43,15 +46,18 @@ public class brickBreakerApp extends GameApplication {
     }
 
     private void initPlayer(){
+        PhysicsComponent physics = new PhysicsComponent();
+        physics.setBodyType(BodyType.KINEMATIC);
         player = Entities.builder()
-                .at(0,700)
-                .viewFromNodeWithBBox(new Rectangle(75,25, Color.BLUE))
+                .type(brickBreakerType.BAT)
+                .at(getWidth() / 2 - 50,700)
+                .viewFromNodeWithBBox(new Rectangle(100,25, Color.BLUE))
+                .with( new CollidableComponent(true))
                 .buildAndAttach(getGameWorld());
     }
 
     private void initBackground(){
         Entities.builder()
-                .type(brickBreakerType.BAT)
                 .viewFromNode(new Rectangle(getWidth(),getHeight(), Color.GRAY))
                 .renderLayer(RenderLayer.BACKGROUND)
                 .with(new IrremovableComponent())

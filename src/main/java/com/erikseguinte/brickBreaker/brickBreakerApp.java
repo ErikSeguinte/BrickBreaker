@@ -16,7 +16,7 @@ public class brickBreakerApp extends GameApplication {
         settings.setWidth(480);
         settings.setIntroEnabled(false);
         settings.setVersion("0.1");
-
+        settings.setTitle("Brick Breaker");
     }
 
 

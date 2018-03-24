@@ -18,5 +18,6 @@ public class brickBreakerApp extends GameApplication {
         settings.setVersion("0.1");
 
     }
-    
+
+
 }

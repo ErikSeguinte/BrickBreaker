@@ -47,6 +47,7 @@ public class brickBreakerApp extends GameApplication {
 
     private void initBackground(){
         Entities.builder()
+                .type(brickBreakerType.BAT)
                 .viewFromNode(new Rectangle(getWidth(),getHeight(), Color.GRAY))
                 .renderLayer(RenderLayer.BACKGROUND)
                 .with(new IrremovableComponent())

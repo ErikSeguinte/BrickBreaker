@@ -36,13 +36,17 @@ public class brickBreakerApp extends GameApplication {
     @Override
     protected void initGame() {
         super.initGame();
+
+        initPlayer();
+
+        initBackground();
+    }
+
+    private void initPlayer(){
         player = Entities.builder()
                 .at(0,700)
                 .viewFromNodeWithBBox(new Rectangle(75,25, Color.BLUE))
                 .buildAndAttach(getGameWorld());
-
-
-        initBackground();
     }
 
     private void initBackground(){

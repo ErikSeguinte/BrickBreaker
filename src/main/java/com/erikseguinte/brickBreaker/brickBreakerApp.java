@@ -47,7 +47,7 @@ public class brickBreakerApp extends GameApplication {
 
     private void initBackground(){
         Entities.builder()
-                .viewFromNode(new Rectangle(480,800, Color.GRAY))
+                .viewFromNode(new Rectangle(getWidth(),getHeight(), Color.GRAY))
                 .renderLayer(RenderLayer.BACKGROUND)
                 .with(new IrremovableComponent())
                 .buildAndAttach(getGameWorld());
@@ -68,7 +68,9 @@ public class brickBreakerApp extends GameApplication {
             @Override
             protected void onAction() {
                 super.onAction();
-                player.translateX(5); // move right 5 pixels
+                if (player.getRightX() < getWidth()) {
+                    player.translateX(5); // move right 5 pixels
+                }
             }
         }, KeyCode.RIGHT);
 
@@ -76,7 +78,9 @@ public class brickBreakerApp extends GameApplication {
             @Override
             protected void onAction() {
                 super.onAction();
-                player.translateX(-5); // move right 5 pixels
+                if (player.getX() > 0) {
+                    player.translateX(-5); // move right 5 pixels
+                }
             }
         }, KeyCode.LEFT);
     }

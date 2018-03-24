@@ -4,6 +4,8 @@ import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.entity.Entities;
 import com.almasb.fxgl.entity.Entity;
 
+import com.almasb.fxgl.entity.RenderLayer;
+import com.almasb.fxgl.entity.component.IrremovableComponent;
 import com.almasb.fxgl.settings.GameSettings;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -35,5 +37,21 @@ public class brickBreakerApp extends GameApplication {
                 .at(0,700)
                 .viewFromNodeWithBBox(new Rectangle(75,25, Color.BLUE))
                 .buildAndAttach(getGameWorld());
+
+
+        initBackground();
+    }
+
+    private void initBackground(){
+        Entities.builder()
+                .viewFromNode(new Rectangle(480,800, Color.GRAY))
+                .renderLayer(RenderLayer.BACKGROUND)
+                .with(new IrremovableComponent())
+                .buildAndAttach(getGameWorld());
+
+        Entity screenBounds = Entities.makeScreenBounds(40);
+        screenBounds.addComponent(new IrremovableComponent());
+
+        getGameWorld().addEntity(screenBounds);
     }
 }

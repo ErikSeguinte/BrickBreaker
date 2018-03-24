@@ -58,6 +58,7 @@ public class BrickBreakerApp extends GameApplication {
                 .at(getWidth() / 2 - 50,700)
                 .viewFromNodeWithBBox(new Rectangle(100,25, Color.BLUE))
                 .with(physics, new CollidableComponent(true))
+                .with(new BatControl())
                 .buildAndAttach(getGameWorld());
     }
 
@@ -78,26 +79,18 @@ public class BrickBreakerApp extends GameApplication {
     protected void initInput() {
         super.initInput();
 
-        Input input = getInput();
-
-        input.addAction(new UserAction("Move Right") {
+        getInput().addAction(new UserAction("Move Left") {
             @Override
             protected void onAction() {
-                super.onAction();
-                if (player.getRightX() < getWidth()) {
-                    player.translateX(5); // move right 5 pixels
-                }
+                getBatControl().left();
             }
-        }, KeyCode.RIGHT);
+        }, KeyCode.A);
 
-        input.addAction(new UserAction("Move Left") {
+        getInput().addAction(new UserAction("Move Right") {
             @Override
             protected void onAction() {
-                super.onAction();
-                if (player.getX() > 0) {
-                    player.translateX(-5); // move right 5 pixels
-                }
+                getBatControl().right();
             }
-        }, KeyCode.LEFT);
+        }, KeyCode.D);
     }
 }

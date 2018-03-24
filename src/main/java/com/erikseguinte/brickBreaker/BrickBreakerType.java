@@ -1,5 +1,5 @@
 package com.erikseguinte.brickBreaker;
 
-public enum brickBreakerType {
+public enum BrickBreakerType {
     BAT, BRICK, BALL
 }

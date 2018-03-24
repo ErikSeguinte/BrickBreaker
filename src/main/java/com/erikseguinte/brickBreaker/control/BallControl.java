@@ -4,7 +4,7 @@ import com.almasb.fxgl.entity.Control;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.physics.PhysicsComponent;
 
-public class ballControl extends Control{
+public class BallControl extends Control{
     private PhysicsComponent physics;
 
     @Override

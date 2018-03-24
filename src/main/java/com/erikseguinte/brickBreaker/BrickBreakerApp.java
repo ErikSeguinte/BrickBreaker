@@ -12,12 +12,17 @@ import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.physics.PhysicsComponent;
 import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
 import com.almasb.fxgl.settings.GameSettings;
+import com.erikseguinte.brickBreaker.control.BatControl;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 
-public class brickBreakerApp extends GameApplication {
+public class BrickBreakerApp extends GameApplication {
+
+    private BatControl getBatControl() {
+        return getGameWorld().getSingleton(BrickBreakerType.BAT).get().getControl(BatControl.class);
+    }
 
     public static void main(String[] args) {
         launch(args);
@@ -49,10 +54,10 @@ public class brickBreakerApp extends GameApplication {
         PhysicsComponent physics = new PhysicsComponent();
         physics.setBodyType(BodyType.KINEMATIC);
         player = Entities.builder()
-                .type(brickBreakerType.BAT)
+                .type(BrickBreakerType.BAT)
                 .at(getWidth() / 2 - 50,700)
                 .viewFromNodeWithBBox(new Rectangle(100,25, Color.BLUE))
-                .with( new CollidableComponent(true))
+                .with(physics, new CollidableComponent(true))
                 .buildAndAttach(getGameWorld());
     }
 

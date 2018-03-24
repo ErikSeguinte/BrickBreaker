@@ -6,7 +6,10 @@ import com.almasb.fxgl.entity.Entity;
 
 import com.almasb.fxgl.entity.RenderLayer;
 import com.almasb.fxgl.entity.component.IrremovableComponent;
+import com.almasb.fxgl.input.Input;
+import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.settings.GameSettings;
+import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -53,5 +56,28 @@ public class brickBreakerApp extends GameApplication {
         screenBounds.addComponent(new IrremovableComponent());
 
         getGameWorld().addEntity(screenBounds);
+    }
+
+    @Override
+    protected void initInput() {
+        super.initInput();
+
+        Input input = getInput();
+
+        input.addAction(new UserAction("Move Right") {
+            @Override
+            protected void onAction() {
+                super.onAction();
+                player.translateX(5); // move right 5 pixels
+            }
+        }, KeyCode.RIGHT);
+
+        input.addAction(new UserAction("Move Left") {
+            @Override
+            protected void onAction() {
+                super.onAction();
+                player.translateX(-5); // move right 5 pixels
+            }
+        }, KeyCode.LEFT);
     }
 }

@@ -21,7 +21,7 @@ import javafx.scene.shape.Rectangle;
 public class BrickBreakerApp extends GameApplication {
 
     private BatControl getBatControl() {
-        return getGameWorld().getSingleton(BrickBreakerType.BAT).get().getControl(BatControl.class);
+        return getGameWorld().getSingleton(BrickBreakerType.BAT).orElseThrow(IllegalAccessError::new).getControl(BatControl.class);
     }
 
     public static void main(String[] args) {

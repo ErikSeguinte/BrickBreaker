@@ -3,18 +3,21 @@ package com.erikseguinte.brickBreaker;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.entity.Entities;
 import com.almasb.fxgl.entity.Entity;
-
 import com.almasb.fxgl.entity.RenderLayer;
 import com.almasb.fxgl.entity.component.CollidableComponent;
 import com.almasb.fxgl.entity.component.IrremovableComponent;
-import com.almasb.fxgl.input.Input;
 import com.almasb.fxgl.input.UserAction;
+import com.almasb.fxgl.physics.BoundingShape;
+import com.almasb.fxgl.physics.HitBox;
 import com.almasb.fxgl.physics.PhysicsComponent;
 import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
+import com.almasb.fxgl.physics.box2d.dynamics.FixtureDef;
 import com.almasb.fxgl.settings.GameSettings;
+import com.erikseguinte.brickBreaker.control.BallControl;
 import com.erikseguinte.brickBreaker.control.BatControl;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 
 
@@ -22,6 +25,10 @@ public class BrickBreakerApp extends GameApplication {
 
     private BatControl getBatControl() {
         return getGameWorld().getSingleton(BrickBreakerType.BAT).orElseThrow(IllegalAccessError::new).getControl(BatControl.class);
+    }
+
+    private BallControl getBallControl() {
+        return getGameWorld().getSingleton(BrickBreakerType.BALL).orElseThrow(IllegalAccessError::new).getControl(BallControl.class);
     }
 
     public static void main(String[] args) {
@@ -46,8 +53,27 @@ public class BrickBreakerApp extends GameApplication {
         super.initGame();
 
         initPlayer();
+        initBall();
 
         initBackground();
+    }
+
+    private Entity ball;
+
+    private void initBall() {
+
+        PhysicsComponent physics = new PhysicsComponent();
+        physics.setBodyType(BodyType.DYNAMIC);
+        physics.setFixtureDef(new FixtureDef().restitution(1f).density(0.03f));
+
+        ball = Entities.builder()
+                .type(BrickBreakerType.BALL)
+                .bbox(new HitBox("main", BoundingShape.circle(10)))
+                .viewFromNode(new Circle(10, Color.LIGHTCORAL))
+                .with(physics, new CollidableComponent(true))
+                .with(new BallControl())
+                .buildAndAttach(getGameWorld());
+
     }
 
     private void initPlayer(){
@@ -92,5 +118,17 @@ public class BrickBreakerApp extends GameApplication {
                 getBatControl().right();
             }
         }, KeyCode.D);
+    }
+
+    @Override
+    protected void initPhysics() {
+        super.initPhysics();
+
+        getPhysicsWorld().setGravity(0, 0);
+    }
+
+    @Override
+    protected void initUI() {
+        getBallControl().release();
     }
 }

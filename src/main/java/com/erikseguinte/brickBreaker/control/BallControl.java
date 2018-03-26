@@ -23,6 +23,6 @@ public class BallControl extends Control{
     }
 
     public void release() {
-        physics.setBodyLinearVelocity(new Vec2(1, 1));
+        physics.setBodyLinearVelocity(new Vec2(1, -1));
     }
 }

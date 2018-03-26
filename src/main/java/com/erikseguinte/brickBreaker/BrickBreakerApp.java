@@ -67,6 +67,7 @@ public class BrickBreakerApp extends GameApplication {
         physics.setFixtureDef(new FixtureDef().restitution(1f).density(0.03f));
 
         ball = Entities.builder()
+                .at(200, 200)
                 .type(BrickBreakerType.BALL)
                 .bbox(new HitBox("main", BoundingShape.circle(10)))
                 .viewFromNode(new Circle(10, Color.LIGHTCORAL))

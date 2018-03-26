@@ -8,6 +8,7 @@ import com.almasb.fxgl.entity.component.CollidableComponent;
 import com.almasb.fxgl.entity.component.IrremovableComponent;
 import com.almasb.fxgl.input.UserAction;
 import com.almasb.fxgl.physics.BoundingShape;
+import com.almasb.fxgl.physics.CollisionHandler;
 import com.almasb.fxgl.physics.HitBox;
 import com.almasb.fxgl.physics.PhysicsComponent;
 import com.almasb.fxgl.physics.box2d.dynamics.BodyType;
@@ -15,6 +16,7 @@ import com.almasb.fxgl.physics.box2d.dynamics.FixtureDef;
 import com.almasb.fxgl.settings.GameSettings;
 import com.erikseguinte.brickBreaker.control.BallControl;
 import com.erikseguinte.brickBreaker.control.BatControl;
+import com.erikseguinte.brickBreaker.control.BrickControl;
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -74,6 +76,7 @@ public class BrickBreakerApp extends GameApplication {
                 .type(BrickBreakerType.BRICK)
                 .viewFromNodeWithBBox(getRectangle())
                 .with(new PhysicsComponent(), new CollidableComponent(true))
+                .with(new BrickControl())
                 .buildAndAttach(getGameWorld());
 
         Entities.builder()
@@ -81,12 +84,21 @@ public class BrickBreakerApp extends GameApplication {
                 .type(BrickBreakerType.BRICK)
                 .viewFromNodeWithBBox(getRectangle())
                 .with(new PhysicsComponent(), new CollidableComponent(true))
+                .with(new BrickControl())
                 .buildAndAttach(getGameWorld());
         Entities.builder()
                 .at(240, 100)
                 .type(BrickBreakerType.BRICK)
                 .viewFromNodeWithBBox(getRectangle())
                 .with(new PhysicsComponent(), new CollidableComponent(true))
+                .with(new BrickControl())
+                .buildAndAttach(getGameWorld());
+        Entities.builder()
+                .at(340, 100)
+                .type(BrickBreakerType.BRICK)
+                .viewFromNodeWithBBox(getRectangle())
+                .with(new PhysicsComponent(), new CollidableComponent(true))
+                .with(new BrickControl())
                 .buildAndAttach(getGameWorld());
     }
 
@@ -158,6 +170,15 @@ public class BrickBreakerApp extends GameApplication {
         super.initPhysics();
 
         getPhysicsWorld().setGravity(0, 0);
+
+        getPhysicsWorld().addCollisionHandler(
+                new CollisionHandler(BrickBreakerType.BALL, BrickBreakerType.BRICK) {
+                    @Override
+                    protected void onCollision(Entity ball, Entity brick) {
+                        brick.getControl(BrickControl.class).onHit();
+                    }
+                }
+        );
     }
 
     @Override

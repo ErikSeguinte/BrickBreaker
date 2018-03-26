@@ -54,8 +54,40 @@ public class BrickBreakerApp extends GameApplication {
 
         initPlayer();
         initBall();
+        initBricks();
 
         initBackground();
+    }
+
+    private Rectangle getRectangle() {
+        Rectangle r = new Rectangle(100, 25, Color.DARKGREEN);
+        r.setStroke(Color.BLACK);
+        r.setStrokeWidth(2.0f);
+        return r;
+    }
+
+    private void initBricks() {
+
+
+        Entities.builder()
+                .at(40, 100)
+                .type(BrickBreakerType.BRICK)
+                .viewFromNodeWithBBox(getRectangle())
+                .with(new PhysicsComponent(), new CollidableComponent(true))
+                .buildAndAttach(getGameWorld());
+
+        Entities.builder()
+                .at(140, 100)
+                .type(BrickBreakerType.BRICK)
+                .viewFromNodeWithBBox(getRectangle())
+                .with(new PhysicsComponent(), new CollidableComponent(true))
+                .buildAndAttach(getGameWorld());
+        Entities.builder()
+                .at(240, 100)
+                .type(BrickBreakerType.BRICK)
+                .viewFromNodeWithBBox(getRectangle())
+                .with(new PhysicsComponent(), new CollidableComponent(true))
+                .buildAndAttach(getGameWorld());
     }
 
     private Entity ball;

@@ -8,7 +8,7 @@ version '1.0-SNAPSHOT'
 
 
 
-mainClassName = 'com.erikseguinte.brickBreaker.BrickBreakerApp'
+mainClassName = 'com.EriksSeguinte.JavaFX.brickBreaker.BrickBreakerApp'
 apply plugin: 'java'
 
 sourceCompatibility = 1.8
